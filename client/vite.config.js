@@ -11,7 +11,14 @@ export default defineConfig({
         target: "http://localhost:1234/",
         changeOrigin: true,
         secure: false
-      }
+      },
+      // proxy: {
+      //   //http://localhost:1234 = creates a router
+      //   '/myAPI': {
+      //     target: "http://localhost:1234/",
+      //     changeOrigin: true,
+      //     secure: false
+      //   }
     }
   }
 })

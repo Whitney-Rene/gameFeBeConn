@@ -20,7 +20,7 @@ function App() {
      }
 
      const callForQuiz = async () => {
-      const response = await fetch ('http://localhost:1234/quiz');
+      const response = await fetch ('http://localhost:1234/test');
       const data = await response.json();
       console.log(data);
       setQuiz(data.test);
