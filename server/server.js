@@ -13,6 +13,11 @@ app.get('/myAPI', (req, res) => {
 app.get('/myAPI/myName', (req, res) => {
     const name = {name: "Whitney-Rene"};
     res.json(name);
+});
+
+app.get('/quiz', (req, res) => {
+    const test = {test: 'does it work?'};
+    res.json(test);
 })
 
 app.listen(PORT, () => {
