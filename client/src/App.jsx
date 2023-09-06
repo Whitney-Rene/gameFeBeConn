@@ -5,12 +5,18 @@ import Question from './components/question';
 function App() {
 
   const [question, setQuestion] = useState('');
+  const [answerOpts, setAnswerOpts] = useState('');
 
      const callForQuizAPI = async () => {
       const response = await fetch ('/myAPI/quizApi');
       const data = await response.json();
       console.log(data);
+
+      const answers = [data.results[0].correct_answer, ...data.results[0].incorrect_answers];
+
       setQuestion(data.results[0].question);
+      setAnswerOpts(answers);
+
      }
 
     //to see name as soon as page renders, you need a hook, useEffect
@@ -22,7 +28,8 @@ function App() {
   return (
     <>
     <div>
-      <Question question={question}/>
+      <Question question={question} answerOpts={answerOpts}/>
+      
     </div>
     </>
   )
