@@ -18,17 +18,9 @@ function App() {
       setQuestionArray(data.results);
       //we need to wait here to populate the states, react is too fast
       console.log('question array', questionArray);
-      console.log('test', questionArray[index].question);
+      // console.log('test', questionArray[index].question);
 
      }
-
-    // Callback function passed to ChildComponent
-    // const updateValue = (newValue) => {
-    //   setValue(newValue);
-    //   console.log("in updateValue funct", value);
-    //   console.log(questionArray[value]);
-    //   setQuestion(questionArray[value]);
-    // };
 
     //to see something as soon as page renders, you need a hook, useEffect
     //function that takes an anonymous function=first param=what do I want to happen when page renders
@@ -51,32 +43,48 @@ function App() {
       
     }
 
+    const renderMessage = () => {
+      //message is true, when we answer the last question
+      //when message is true, render <p>
+      if (message){
+        return <p>You have completed the game! & Your score is {score}</p>
+      //if message is false, render questions or empty string
+      } else {
+        //is questionArray populated?
+        if(questionArray.length > 0 ) {
+          return <Question quiz={questionArray[index]} getResults={handleResult}/>
+        }
+        //if questionsArray is not populated
+        else {
+          return ` `
+        }
+    }
+  }
+
   return (
     <>
       <div>
         <h1 className='title'>Questions Game</h1>
       </div>
-      {/* less readable, if/else is easier to read */}
-      {/* {
-        message ? (<p>You have completed the game! & Your score is {score}</p>) : (
-          <>{
-            questionArray.length > 0 ? (
-              <Question quiz={questionArray[index]} getResults={handleResult}/>
-            ) : ` `
-          }
-          <button>{score}</button>
-
-          </>
-        )
-      } */}
-    
-    
+      {renderMessage()}
+      <button>{score}</button>
     </>
   )
 }
 
 export default App
 
-// investigate a little how you can create a checkbox in your return function 
-//in your component to show your options to answer
+// {/* less readable, if/else is easier to read */}
+// {/* {
+//   message ? (<p>You have completed the game! & Your score is {score}</p>) : (
+//     <>{
+//       questionArray.length > 0 ? (
+//         <Question quiz={questionArray[index]} getResults={handleResult}/>
+//       ) : ` `
+//     }
+//     <button>{score}</button>
+
+//     </>
+//   )
+// } */}
 
