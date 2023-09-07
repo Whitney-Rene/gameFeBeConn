@@ -4,9 +4,10 @@ import './appJsx.css';
 import Question from './components/question';
 
 function App() {
-
-  const [questionArray, setQuestionArray] = useState('hello');
-  const [value, setValue]= useState(0);
+  const [index, setIndex]= useState(0);
+  const [questionArray, setQuestionArray] = useState([]);
+  const [answers, setAnswers]= useState('');
+  // const [loading, setLoading] = useState(false);
 
      const callForQuizAPI = async () => {
       const response = await fetch ('/myAPI/quizApi');
@@ -14,9 +15,23 @@ function App() {
       console.log('data fromAPI', data);
 
       setQuestionArray(data.results);
-      console.log('question array', data.results);
+      // console.log('INDEX', index);
+      //we need to wait here to populate the states, react is too fast
+      console.log('question array', questionArray);
+      console.log('test', questionArray[index].question);
+
+      // const answerOptions = [questionArray[index].correct_answer, ...questionArray[index].incorrect_answers];
+      // console.log('answers', answerOptions);
+      // setAnswers(answerOptions);
 
      }
+     
+    //  const checkData = (questionArray) => {
+    //   console.log("Qarray", questionArray);
+    //   if(questionArray){
+    //     setLoading(true);
+    //   }
+    //  }
 
     // Callback function passed to ChildComponent
     // const updateValue = (newValue) => {
@@ -32,16 +47,28 @@ function App() {
       callForQuizAPI();
     }, []);
 
+    // useEffect(() =>{
+    //   checkData();
+    // }, [loading])
+
   return (
     <>
       <div>
         <h1 className='title'>Questions Game</h1>
       </div>
-      {questionArray[value].question}
-
-
+      {
+        questionArray.length > 0 ? (
+          <Question quiz={questionArray[index]}/>
+        ) : ` `
+      }
+      {/* {!questionArray ? <p>Loading...</p> : <Question question={questionArray[index].question} answers={answers}/>} */}
+    
     </>
   )
 }
 
 export default App
+
+// investigate a little how you can create a checkbox in your return function 
+//in your component to show your options to answer
+
