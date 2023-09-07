@@ -112,3 +112,12 @@ function App() {
 }
 
 export default App
+
+      {questionArray.length > 0 ? (
+        <div>
+          <p>{questionArray[value].question}</p>
+          {/* You can render other elements related to the question here */}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}

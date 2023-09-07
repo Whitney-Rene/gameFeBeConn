@@ -5,14 +5,16 @@ import Question from './components/question';
 
 function App() {
 
-  const [question, setQuestion] = useState('');
+  const [questionArray, setQuestionArray] = useState('hello');
+  const [value, setValue]= useState(0);
 
      const callForQuizAPI = async () => {
       const response = await fetch ('/myAPI/quizApi');
       const data = await response.json();
-      console.log(data);
+      console.log('data fromAPI', data);
 
-      setQuestion(data.results[0].question);
+      setQuestionArray(data.results);
+      console.log('question array', data.results);
 
      }
 
@@ -35,10 +37,9 @@ function App() {
       <div>
         <h1 className='title'>Questions Game</h1>
       </div>
-      {/* <Question incorrect={question.incorrect_answers} correct={question.correct_answer} question={question.question} value={value} onUpdateValue={updateValue}/> */}
-      {question}
+      {questionArray[value].question}
 
-    
+
     </>
   )
 }
