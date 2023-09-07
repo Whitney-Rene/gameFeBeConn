@@ -37,12 +37,15 @@ function App() {
     }, []);
 
     const handleResult = (result) => {
+      //if user selects correct answer, increment score by 1
       if(result === true) {
         setScore(score + 1);
       }
+      //if index is the last index of array then setMessage
       if(index == questionArray.length-1){
         setMessage(true);
       } else {
+      //if index is not the last index, increment the index
         setIndex(index + 1);
       }
       
@@ -53,18 +56,20 @@ function App() {
       <div>
         <h1 className='title'>Questions Game</h1>
       </div>
-      {
+      {/* less readable, if/else is easier to read */}
+      {/* {
         message ? (<p>You have completed the game! & Your score is {score}</p>) : (
           <>{
             questionArray.length > 0 ? (
               <Question quiz={questionArray[index]} getResults={handleResult}/>
             ) : ` `
           }
+          <button>{score}</button>
+
           </>
         )
-      }
-      
-      {/* {!questionArray ? <p>Loading...</p> : <Question question={questionArray[index].question} answers={answers}/>} */}
+      } */}
+    
     
     </>
   )
