@@ -6,7 +6,8 @@ import Question from './components/question';
 function App() {
   const [index, setIndex]= useState(0);
   const [questionArray, setQuestionArray] = useState([]);
-  const [answers, setAnswers]= useState('');
+  const [score, setScore]= useState(0);
+  const [message, setMessage] = useState(false);
   // const [loading, setLoading] = useState(false);
 
      const callForQuizAPI = async () => {
@@ -15,23 +16,11 @@ function App() {
       console.log('data fromAPI', data);
 
       setQuestionArray(data.results);
-      // console.log('INDEX', index);
       //we need to wait here to populate the states, react is too fast
       console.log('question array', questionArray);
       console.log('test', questionArray[index].question);
 
-      // const answerOptions = [questionArray[index].correct_answer, ...questionArray[index].incorrect_answers];
-      // console.log('answers', answerOptions);
-      // setAnswers(answerOptions);
-
      }
-     
-    //  const checkData = (questionArray) => {
-    //   console.log("Qarray", questionArray);
-    //   if(questionArray){
-    //     setLoading(true);
-    //   }
-    //  }
 
     // Callback function passed to ChildComponent
     // const updateValue = (newValue) => {
@@ -47,9 +36,17 @@ function App() {
       callForQuizAPI();
     }, []);
 
-    // useEffect(() =>{
-    //   checkData();
-    // }, [loading])
+    const handleResult = (result) => {
+      if(result === true) {
+        setScore(score + 1);
+      }
+      if(index == questionArray.length-1){
+        setMessage(true);
+      } else {
+        setIndex(index + 1);
+      }
+      
+    }
 
   return (
     <>
@@ -57,10 +54,16 @@ function App() {
         <h1 className='title'>Questions Game</h1>
       </div>
       {
-        questionArray.length > 0 ? (
-          <Question quiz={questionArray[index]}/>
-        ) : ` `
+        message ? (<p>You have completed the game! & Your score is {score}</p>) : (
+          <>{
+            questionArray.length > 0 ? (
+              <Question quiz={questionArray[index]} getResults={handleResult}/>
+            ) : ` `
+          }
+          </>
+        )
       }
+      
       {/* {!questionArray ? <p>Loading...</p> : <Question question={questionArray[index].question} answers={answers}/>} */}
     
     </>
