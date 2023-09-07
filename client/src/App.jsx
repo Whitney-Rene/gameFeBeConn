@@ -1,26 +1,18 @@
 import { useEffect , useState} from 'react';
 import './App.css'
+import './appJsx.css';
 import Question from './components/question';
 
 function App() {
 
   const [question, setQuestion] = useState('');
-  // const [answerOpts, setAnswerOpts] = useState('');
-  // const [value, setValue] = useState(0);
-  // const [questionArray, setQuestionArray] = useState([]);
 
      const callForQuizAPI = async () => {
       const response = await fetch ('/myAPI/quizApi');
       const data = await response.json();
       console.log(data);
-      
-
-      // const answers = [data.results[0].correct_answer, ...data.results[0].incorrect_answers];
 
       setQuestion(data.results[0].question);
-      // setQuestion(data.results[value]);
-      // setAnswerOpts(answers);
-      // setQuestionArray(data.results);
 
      }
 
@@ -40,12 +32,13 @@ function App() {
 
   return (
     <>
-    <div>
-      <h1>Hello, this is WR</h1>
+      <div>
+        <h1 className='title'>Questions Game</h1>
+      </div>
       {/* <Question incorrect={question.incorrect_answers} correct={question.correct_answer} question={question.question} value={value} onUpdateValue={updateValue}/> */}
       {question}
 
-    </div>
+    
     </>
   )
 }
