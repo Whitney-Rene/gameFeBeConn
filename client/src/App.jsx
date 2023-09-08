@@ -69,7 +69,7 @@ function App() {
         <h1 className='title'>Questions Game</h1>
       </div>
       {renderMessage()}
-      <p className='score'>Score: {score}</p>
+      <p className='score'>{score}</p>
     </>
   )
 }
