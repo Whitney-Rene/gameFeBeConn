@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+//??
 const app = express();
 app.use(cors()); //enables cors, middleware
 
@@ -14,6 +15,7 @@ app.get('/myAPI/quizApi', async (req, res) => {
     res.json(data);
 })
 
+//??
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 })

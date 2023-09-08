@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Question (props) {
+
+  // const [answer, setAnswer] = useState(undefined);
 
   //creates a variable to hold answer options in an array
   const answerOptions = [props.quiz.correct_answer, ...props.quiz.incorrect_answers];

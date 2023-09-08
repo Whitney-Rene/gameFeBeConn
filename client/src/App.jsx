@@ -8,6 +8,7 @@ function App() {
   const [questionArray, setQuestionArray] = useState([]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState(false);
+  //const [answer, setAnswer] = useState(undefined);
 
   //makes a call to backend
   const callForQuizAPI = async () => {
@@ -31,7 +32,11 @@ function App() {
     //if user selects correct answer, increment score by 1
     if (result === true) {
       setScore(score + 1);
+      // setAnswer("");
     }
+    // if (result === false) {
+    //   setAnswer(questionArray[index].correct_answer)
+    // }
     //if index is the last index of array then setMessage
     if (index == questionArray.length - 1) {
       setMessage(true);
