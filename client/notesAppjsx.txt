@@ -121,3 +121,17 @@ export default App
       ) : (
         <p>Loading...</p>
       )}
+
+  // {/* less readable, if/else is easier to read */}
+// {/* {
+//   
+//       questionArray.length > 0 ? (
+//         <Question quiz={questionAmessage ? (<p>You have completed the game! & Your score is {score}</p>) : (
+//     <>{rray[index]} getResults={handleResult}/>
+//       ) : ` `
+//     }
+//     <button>{score}</button>
+
+//     </>
+//   )
+// } */}

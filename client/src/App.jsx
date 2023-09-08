@@ -1,63 +1,62 @@
-import { useEffect , useState} from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
-import './appJsx.css';
 import Question from './components/question';
 
 function App() {
-  const [index, setIndex]= useState(0);
+  //states
+  const [index, setIndex] = useState(0);
   const [questionArray, setQuestionArray] = useState([]);
-  const [score, setScore]= useState(0);
+  const [score, setScore] = useState(0);
   const [message, setMessage] = useState(false);
-  // const [loading, setLoading] = useState(false);
 
-     const callForQuizAPI = async () => {
-      const response = await fetch ('/myAPI/quizApi');
-      const data = await response.json();
-      console.log('data fromAPI', data);
+  //makes a call to backend
+  const callForQuizAPI = async () => {
+    const response = await fetch('/myAPI/quizApi');
+    const data = await response.json();
+    // console.log('data fromAPI', data);
 
-      setQuestionArray(data.results);
-      //we need to wait here to populate the states, react is too fast
-      console.log('question array', questionArray);
-      // console.log('test', questionArray[index].question);
+    setQuestionArray(data.results);
 
-     }
+    //we need to wait here to populate the states, react is too fast
+    console.log('question array', questionArray);
 
-    //to see something as soon as page renders, you need a hook, useEffect
-    //function that takes an anonymous function=first param=what do I want to happen when page renders
-    useEffect(() => {
-      callForQuizAPI();
-    }, []);
+  }
 
-    const handleResult = (result) => {
-      //if user selects correct answer, increment score by 1
-      if(result === true) {
-        setScore(score + 1);
-      }
-      //if index is the last index of array then setMessage
-      if(index == questionArray.length-1){
-        setMessage(true);
-      } else {
-      //if index is not the last index, increment the index
-        setIndex(index + 1);
-      }
-      
+  //hook, what I want to happen when page renders
+  useEffect(() => {
+    callForQuizAPI();
+  }, []);
+
+  const handleResult = (result) => {
+    //if user selects correct answer, increment score by 1
+    if (result === true) {
+      setScore(score + 1);
+    }
+    //if index is the last index of array then setMessage
+    if (index == questionArray.length - 1) {
+      setMessage(true);
+    } else {
+      //if index is not the last index, increment the index, show next question
+      setIndex(index + 1);
     }
 
-    const renderMessage = () => {
-      //message is true, when we answer the last question
-      //when message is true, render <p>
-      if (message){
-        return <p>You have completed the game! & Your score is {score}</p>
+  }
+
+  const renderMessage = () => {
+    //message is true, when we answer the last question
+    //when message is true, render <p>
+    if (message) {
+      return <p>You have completed the game! & Your score is {score}</p>
       //if message is false, render questions or empty string
-      } else {
-        //is questionArray populated?
-        if(questionArray.length > 0 ) {
-          return <Question quiz={questionArray[index]} getResults={handleResult}/>
-        }
-        //if questionsArray is not populated
-        else {
-          return ` `
-        }
+    } else {
+      //is questionArray populated?
+      if (questionArray.length > 0) {
+        return <Question quiz={questionArray[index]} getResults={handleResult} />
+      }
+      //if questionsArray is not populated
+      else {
+        return ` `
+      }
     }
   }
 
@@ -73,18 +72,4 @@ function App() {
 }
 
 export default App
-
-// {/* less readable, if/else is easier to read */}
-// {/* {
-//   message ? (<p>You have completed the game! & Your score is {score}</p>) : (
-//     <>{
-//       questionArray.length > 0 ? (
-//         <Question quiz={questionArray[index]} getResults={handleResult}/>
-//       ) : ` `
-//     }
-//     <button>{score}</button>
-
-//     </>
-//   )
-// } */}
 
