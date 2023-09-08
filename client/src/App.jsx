@@ -29,14 +29,12 @@ function App() {
   }, []);
 
   const handleResult = (result) => {
+
     //if user selects correct answer, increment score by 1
     if (result === true) {
       setScore(score + 1);
       // setAnswer("");
     }
-    // if (result === false) {
-    //   setAnswer(questionArray[index].correct_answer)
-    // }
     //if index is the last index of array then setMessage
     if (index == questionArray.length - 1) {
       setMessage(true);
@@ -71,7 +69,7 @@ function App() {
         <h1 className='title'>Questions Game</h1>
       </div>
       {renderMessage()}
-      <button>{score}</button>
+      <p className='score'>Score: {score}</p>
     </>
   )
 }
