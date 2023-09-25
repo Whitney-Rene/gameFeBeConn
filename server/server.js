@@ -1,20 +1,21 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 
+//??
 const app = express();
-app.use(cors()); //enable cors
+app.use(cors()); //enables cors, middleware
 
 const PORT = process.env.PORT || 1234;
 
-app.get('/myAPI', (req, res) => {
-    res.json({ message: "Hello from my ExpressJS"})
-});
-
-app.get('/myAPI/myName', (req, res) => {
-    const name = {name: "Whitney-Rene"};
-    res.json(name);
+//call to api
+app.get('/myAPI/quizApi', async (req, res) => {
+    const response = await fetch ('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple');
+    const data = await response.json();
+    console.log(data);
+    res.json(data);
 })
 
+//??
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 })

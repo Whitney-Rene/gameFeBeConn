@@ -1,0 +1,137 @@
+import { useEffect , useState} from 'react';
+import './App.css'
+import Question from './components/question';
+
+function App() {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [test, setTest] = useState('');
+  const [question, setQuestion] = useState('');
+
+    const callForName = async () => {
+      const response = await fetch ('/myAPI/myName');
+      const data = await response.json();
+      console.log(data);
+      setName(data.name);
+    }
+     const callForMessage = async () => {
+      const response = await fetch ('myAPI/');
+      const data = await response.json();
+      console.log(data);
+      setMessage(data.message);
+     }
+
+     const callForQuiz = async () => {
+      const response = await fetch ('/myAPI/test');
+      const data = await response.json();
+      console.log(data);
+      setTest(data.test);
+     }
+
+     const callForQuizAPI = async () => {
+      const response = await fetch ('/myAPI/quizApi');
+      const data = await response.json();
+      console.log(data);
+      setQuestion(data.results[0].question);
+     }
+
+    //to see name as soon as page renders, you need a hook, useEffect
+    //function that takes an anonymous function=first param=what do I want to happen when page renders
+    useEffect(() => {
+      callForName();
+      callForMessage();
+      callForQuiz();
+      callForQuizAPI();
+    }, []);
+
+  return (
+    <>
+    <div>
+      <h1>Hi {name}</h1>
+      {message}
+      {test}
+      <Question question={question}/>
+    </div>
+    </>
+  )
+}
+
+export default App
+
+2ND Version
+import { useEffect , useState} from 'react';
+import './App.css'
+import Question from './components/question';
+
+function App() {
+
+  const [question, setQuestion] = useState('');
+  // const [answerOpts, setAnswerOpts] = useState('');
+  // const [value, setValue] = useState(0);
+  // const [questionArray, setQuestionArray] = useState([]);
+
+     const callForQuizAPI = async () => {
+      const response = await fetch ('/myAPI/quizApi');
+      const data = await response.json();
+      console.log(data);
+      
+
+      // const answers = [data.results[0].correct_answer, ...data.results[0].incorrect_answers];
+
+      setQuestion(data.results[0].question);
+      // setQuestion(data.results[value]);
+      // setAnswerOpts(answers);
+      // setQuestionArray(data.results);
+
+     }
+
+    // Callback function passed to ChildComponent
+    // const updateValue = (newValue) => {
+    //   setValue(newValue);
+    //   console.log("in updateValue funct", value);
+    //   console.log(questionArray[value]);
+    //   setQuestion(questionArray[value]);
+    // };
+
+    //to see something as soon as page renders, you need a hook, useEffect
+    //function that takes an anonymous function=first param=what do I want to happen when page renders
+    useEffect(() => {
+      callForQuizAPI();
+    }, []);
+
+  return (
+    <>
+    <div>
+      <h1>Hello, this is WR</h1>
+      {/* <Question incorrect={question.incorrect_answers} correct={question.correct_answer} question={question.question} value={value} onUpdateValue={updateValue}/> */}
+      {question}
+
+    </div>
+    </>
+  )
+}
+
+export default App
+
+      {questionArray.length > 0 ? (
+        <div>
+          <p>{questionArray[value].question}</p>
+          {/* You can render other elements related to the question here */}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+
+  // {/* less readable, if/else is easier to read */}
+// {/* {
+//   
+//       questionArray.length > 0 ? (
+//         <Question quiz={questionAmessage ? (<p>You have completed the game! & Your score is {score}</p>) : (
+//     <>{rray[index]} getResults={handleResult}/>
+//       ) : ` `
+//     }
+//     <button>{score}</button>
+
+//     </>
+//   )
+// } */}

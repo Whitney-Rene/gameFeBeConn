@@ -40,3 +40,75 @@
 .read-the-docs {
   color: #888;
 }
+
+body {
+  background-color: #f5e6ca; /* Warm beige background */
+  font-family: Arial, sans-serif;
+}
+
+.title {
+display: inline-block;
+font-size: 36px;
+font-weight: bold;
+color: #8c6d4a; /* Dark brown text color */
+background-color: #eed9b8; /* Light tan background */
+padding: 10px;
+text-align: center;
+border-radius: 5px;
+margin-bottom: 20px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px; /* Add some spacing between buttons */
+}
+
+.buttons {
+  background-color: #8c6d4a; /* Dark brown background color */
+  color: #f5e6ca; /* Warm beige text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth color transition on hover */
+
+  /* Add more styles like box-shadow or any other effects as needed */
+}
+
+.buttons:hover {
+  background-color: lightsalmon; /* Light tan background on hover */
+}
+
+p {
+  font-size: 18px;
+  font-weight: bold; /* Make the text bold */
+  color: lightsalmon; /* Pastel coral text color */
+  background-color: #eed9b8; /* Pastel beige background */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.score {
+  font-size: 18px;
+  font-weight: bold;
+  color: lightslategray;
+  background-color: #f5e6ca;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 50%; /* Position the score in the center horizontally */
+  transform: translateX(-50%); /* Center the score relative to its own width */
+  max-width: 80%; /* Set a maximum width for the score */
+}
+
+
+
+
