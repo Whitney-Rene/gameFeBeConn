@@ -3,12 +3,17 @@ import './App.css'
 import Question from './components/question';
 
 function App() {
+
   //states
   const [index, setIndex] = useState(0);
   const [questionArray, setQuestionArray] = useState([]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState(false);
-  //const [answer, setAnswer] = useState(undefined);
+
+  //create some state to handle user's name??????
+  const [userName, setUserName] = useState("");
+  //form, what is your name?
+  //then message that says hello "user"
 
   //makes a call to backend
   const callForQuizAPI = async () => {
@@ -19,7 +24,7 @@ function App() {
     setQuestionArray(data.results);
 
     //we need to wait here to populate the states, react is too fast
-    console.log('question array', questionArray);
+    //console.log('question array', questionArray);
 
   }
 
@@ -32,7 +37,7 @@ function App() {
 
     //if user selects correct answer, increment score by 1
     if (result === true) {
-      setScore(score + 1);
+      setScore(score + 8);
       // setAnswer("");
     }
     //if index is the last index of array then setMessage
@@ -45,16 +50,27 @@ function App() {
 
   }
 
-  const renderMessage = () => {
+  //????
+  // const submitScore = (username) => {
+      //const response = await fetch('/myAPI/quizApi:${username}');
+
+  // }
+
+  /* will I need to put something here, so data/submitScore can come through*/
+  const renderMessage = (/* ?? */) => {
     //message is true, when we answer the last question
     //when message is true, render <p>
     if (message) {
+      // <button onClick={() => submitScore()}> Submit {score} </button>  ???????
       return <p>You have completed the game! & Your score is {score}</p>
       //if message is false, render questions or empty string
     } else {
       //is questionArray populated?
       if (questionArray.length > 0) {
-        return <Question quiz={questionArray[index]} getResults={handleResult} />
+        return ( <>
+                  <Question quiz={questionArray[index]} getResults={handleResult} />
+                  <p className='score'>{score}</p>
+                </>)
       }
       //if questionsArray is not populated
       else {
@@ -63,13 +79,25 @@ function App() {
     }
   }
 
+  console.log('score', typeof {score})
+
   return (
     <>
+
       <div>
         <h1 className='title'>Questions Game</h1>
+          <div>
+          {index == questionArray.length -1 ? null : <span className='points'>Each Question is worth 8 points</span>}
+          </div>
       </div>
+
       {renderMessage()}
-      <p className='score'>{score}</p>
+
+    
+      {/* {index == questionArray.length ? null : <p className='score'>{score}</p>} */}
+
+
+    {/* button to show/display score board, onClick=make a call to endpoint, which will add score to current value of column, where username = "user'name" */}
     </>
   )
 }

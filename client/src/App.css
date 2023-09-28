@@ -109,6 +109,12 @@ p {
   max-width: 80%; /* Set a maximum width for the score */
 }
 
+.points {
+  font-size: small;
+  color: powderblue;
+  margin-top: 0;
+}
+
 
 
 

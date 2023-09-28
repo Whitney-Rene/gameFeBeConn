@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      //http://localhost:1234 = creates a router
+      //http://localhost:1234 = creates a route
       '/myAPI': {
         target: "http://localhost:1234/",
         changeOrigin: true,
