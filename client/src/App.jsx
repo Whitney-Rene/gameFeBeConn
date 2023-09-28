@@ -19,19 +19,10 @@ function App() {
   const callForQuizAPI = async () => {
     const response = await fetch('/myAPI/quizApi');
     const data = await response.json();
-    // console.log('data fromAPI', data);
 
     setQuestionArray(data.results);
 
-    //we need to wait here to populate the states, react is too fast
-    //console.log('question array', questionArray);
-
   }
-
-  //hook, what I want to happen when page renders
-  useEffect(() => {
-    callForQuizAPI();
-  }, []);
 
   const handleResult = (result) => {
 
@@ -52,7 +43,7 @@ function App() {
 
   //????
   // const submitScore = (username) => {
-      //const response = await fetch('/myAPI/quizApi:${username}');
+      //const response = await fetch('/myAPI/quizApi/${username}/${score}');
 
   // }
 
@@ -79,7 +70,10 @@ function App() {
     }
   }
 
-  console.log('score', typeof {score})
+  //hook, what I want to happen when page renders, does the position matter?
+  useEffect(() => {
+    callForQuizAPI();
+  }, []);
 
   return (
     <>
