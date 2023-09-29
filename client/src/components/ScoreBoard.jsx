@@ -7,6 +7,7 @@ function ScoreBoard () {
     const [buttonClicked, setButtonClicked] = useState(false);
     console.log(buttonClicked);
 
+    //req to api in backend
     const reqTopFive = async () => {
         try {
         const response = await fetch('/myAPI/highScorePlayers');
@@ -15,9 +16,11 @@ function ScoreBoard () {
         } catch(error) {
             console.log('Error fetch top 5:', error)
         }
+        //set this to true, so scoreboard appears
         setButtonClicked(true);
       };
 
+    //when/where to use useEffect???
     // useEffect(() => {
     //     reqTopFive();
     //   }, []);
@@ -26,6 +29,7 @@ function ScoreBoard () {
         <>
 
         <button onClick={() => {reqTopFive()}}>ScoreBoard: Top Five!</button>
+        
         {buttonClicked && ( 
             <> 
                 <h2>Top 5 Players</h2>

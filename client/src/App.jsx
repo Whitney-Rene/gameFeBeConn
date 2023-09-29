@@ -37,13 +37,16 @@ function App() {
     }
   };
 
+  //put req to backend endpoint connected to db
   const submitScore = async (username) => {
 
+    //structure for req body
     const reqBody = {
       player_name: username,
       currentscore: score, 
     };
 
+    //call or request to backend api
     try {
       const response = await fetch('/myAPI/editplayer_score', {
         method: 'PUT',
@@ -53,6 +56,7 @@ function App() {
         body: JSON.stringify(reqBody),
       });
 
+      //set a message to update user on status of score being submitted
       if (response.ok) {
         setSubmitStatus(`${reqBody.player_name}, your score has been RECORDED!`);
       } else {
@@ -97,12 +101,15 @@ function App() {
 
   return (
     <>
+      {/* render scoreboard comp at end of game */}
+      {index == questionArray.length -1 && <ScoreBoard /> }
 
-      <ScoreBoard />
       <h1 className='title'>Questions Game</h1>
       
+      {/* message appear to confirm successful/unsuccessful req to backend api */}
       {submitStatus && <p>{submitStatus}</p>}
 
+      {/* logic for displaying question, or ending score */}
       {renderMessage()}
 
       

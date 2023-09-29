@@ -3,14 +3,13 @@ const cors = require('cors');
 require('dotenv').config(); 
 const db = require('./db/db-connection.js');
 
-//??
 const app = express();
 app.use(cors()); //enables cors, middleware
 app.use(express.json());    
 
 const PORT = process.env.PORT || 1234;
 
-//call to api, returns a json with an array of qs
+//call to api, returns a json with an array of questionss
 app.get('/myAPI/quizApi', async (req, res) => {
     const response = await fetch ('https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple');
     const data = await response.json();
@@ -18,7 +17,7 @@ app.get('/myAPI/quizApi', async (req, res) => {
     res.json(data);
 });
 
-//endpoint that returns a json with player info in each obj
+//endpoint that returns a json with player info in each obj, select * from players
 app.get('/myAPI/players', async (req, res) => {
     try {
         const {rows: players} = await db.query ('SELECT * FROM players');
@@ -81,18 +80,6 @@ app.put('/myAPI/editplayer_score', async (req, res) => {
 
 })
 
-// try {
-//     const response = await fetch(`http://localhost:1234/myAPI/editplayerscore`, {
-//     method: 'PUT',
-//     headers: {'Content-Type': 'application/json'},
-//     body: JSON.stringify({player_name: 'Whitney-Rene', currentscore: 5}),
-// });
-//??
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 })
-
-
-//most proud of :
-//the work in the server with endpoints/routes
-//working with postman

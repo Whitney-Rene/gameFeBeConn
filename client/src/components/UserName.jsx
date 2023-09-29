@@ -2,14 +2,19 @@ import { useState } from 'react';
 
 function UserName ({submitScore}) {
 
+    //state
     const [userName, setUserName] = useState("");
     const [submitted, setSubmitted] = useState(false);
 
+    //
     const handleSubmit = (event) => {
 
         event.preventDefault();
+        //grab userName state and pass it as parameter to prop/function
         submitScore(userName);
+        //set this state to true, so that text on button changes to let user know name was grabbed
         setSubmitted(true);
+        //reset input box to blank, ui=user knows something happened
         setUserName('');
 
     };
@@ -17,6 +22,7 @@ function UserName ({submitScore}) {
     return (
 
         <>
+            {/* form */}
             <form onSubmit={handleSubmit}>
                 <label>
                     Enter your name & SUBMIT to save your score:
@@ -31,8 +37,9 @@ function UserName ({submitScore}) {
                         onChange={(e) => setUserName(e.target.value)}
                     />
                 </label>
-                {/* this code is a little unclear to me, but fixed an issue in my code/ux */}
+
                 <br />
+                {/* disabled prop is unclear to me, internet suggested it */}
                 <button type='submit'disabled={submitted}>
                     {submitted ? "Name Submitted" : "Submit"}
                 </button>
