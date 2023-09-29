@@ -4,6 +4,8 @@ function ScoreBoard () {
 
     //state
     const [topFivePlayers, setTopFivePlayers] = useState([]);
+    const [buttonClicked, setButtonClicked] = useState(false);
+    console.log(buttonClicked);
 
     const reqTopFive = async () => {
         try {
@@ -13,28 +15,32 @@ function ScoreBoard () {
         } catch(error) {
             console.log('Error fetch top 5:', error)
         }
-
+        setButtonClicked(true);
       };
 
-    useEffect(() => {
-        reqTopFive();
-      }, []);
+    // useEffect(() => {
+    //     reqTopFive();
+    //   }, []);
 
     return (
         <>
 
         <button onClick={() => {reqTopFive()}}>ScoreBoard: Top Five!</button>
-        <h2>Top 5 Players</h2>
-            <ul>
-                {topFivePlayers.map((player, index) => (
-                <li key={index}>
-                    {player.player_name}: {player.player_score} points
-                </li>
-                ))}
-            </ul>
+        {buttonClicked && ( 
+            <> 
+                <h2>Top 5 Players</h2>
+                <ul>
+                    {topFivePlayers.map((player, index) => (
+                        <li key={index}>
+                            {player.player_name}: {player.player_score} points
+                        </li>
+                    ))}
+                </ul> 
+            </>
+            )}
 
         </>
-    )
+    );
 };
 
 export default ScoreBoard
