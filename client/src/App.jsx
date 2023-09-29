@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import Question from './components/question';
+import UserName from './components/UserName';
 
 function App() {
 
@@ -9,11 +10,7 @@ function App() {
   const [questionArray, setQuestionArray] = useState([]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState(false);
-
-  //create some state to handle user's name??????
-  const [userName, setUserName] = useState("");
-  //form, what is your name?
-  //then message that says hello "user"
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   //makes a call to backend
   const callForQuizAPI = async () => {
@@ -21,11 +18,9 @@ function App() {
     const data = await response.json();
 
     setQuestionArray(data.results);
-
-  }
+  };
 
   const handleResult = (result) => {
-
     //if user selects correct answer, increment score by 1
     if (result === true) {
       setScore(score + 8);
@@ -38,22 +33,40 @@ function App() {
       //if index is not the last index, increment the index, show next question
       setIndex(index + 1);
     }
+  };
 
-  }
+  const submitScore = async (username) => {
 
-  //????
-  // const submitScore = (username) => {
-      //const response = await fetch('/myAPI/quizApi/${username}/${score}');
+    const reqBody = {
+      player_name: username,
+      currentscore: score, 
+    };
 
-  // }
+    try {
+      const response = await fetch('/myAPI/editplayer_score', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+      });
+
+      if (response.ok) {
+        setSubmitStatus(`${reqBody.player_name}, your score has been submitted!`);
+      } else {
+       setSubmitStatus('Score not submitted :(');
+      }
+    } catch (error) {
+      setSubmitStatus('Error with submit');
+    }
+  };
 
   /* will I need to put something here, so data/submitScore can come through*/
   const renderMessage = (/* ?? */) => {
     //message is true, when we answer the last question
     //when message is true, render <p>
     if (message) {
-      // <button onClick={() => submitScore()}> Submit {score} </button>  ???????
-      return <p>You have completed the game! & Your score is {score}</p>
+      return <button onClick={() => submitScore()} className='buttons'>CLICK to save your score of {score} points</button>
       //if message is false, render questions or empty string
     } else {
       //is questionArray populated?
@@ -68,7 +81,7 @@ function App() {
         return ` `
       }
     }
-  }
+  };
 
   //hook, what I want to happen when page renders, does the position matter?
   useEffect(() => {
@@ -78,20 +91,14 @@ function App() {
   return (
     <>
 
-      <div>
-        <h1 className='title'>Questions Game</h1>
-          <div>
-          {index == questionArray.length -1 ? null : <span className='points'>Each Question is worth 8 points</span>}
-          </div>
-      </div>
+      <h1 className='title'>Questions Game</h1>
+      
+      <UserName submitScore={submitScore}/>
+      
+      {submitStatus && <p>{submitStatus}</p>}
 
       {renderMessage()}
 
-    
-      {/* {index == questionArray.length ? null : <p className='score'>{score}</p>} */}
-
-
-    {/* button to show/display score board, onClick=make a call to endpoint, which will add score to current value of column, where username = "user'name" */}
     </>
   )
 }
