@@ -3,13 +3,14 @@ import { useState } from 'react';
 function UserName ({submitScore}) {
 
     const [userName, setUserName] = useState("");
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (event) => {
 
         event.preventDefault();
         submitScore(userName);
-
-        setUserName("Thank you!");
+        setSubmitted(true);
+        setUserName('');
 
     };
 
@@ -18,7 +19,8 @@ function UserName ({submitScore}) {
         <>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Nombre:
+                    Enter your name & SUBMIT to save your score:
+                    <br />
                     <input 
                         type='text'
                         // can this be any name or should mimic database column?
@@ -29,7 +31,11 @@ function UserName ({submitScore}) {
                         onChange={(e) => setUserName(e.target.value)}
                     />
                 </label>
-                <button type='submit'>Submit</button>
+                {/* this code is a little unclear to me, but fixed an issue in my code/ux */}
+                <br />
+                <button type='submit'disabled={submitted}>
+                    {submitted ? "Name Submitted" : "Submit"}
+                </button>
 
             </form>
         </>

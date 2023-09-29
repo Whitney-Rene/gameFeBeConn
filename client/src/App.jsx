@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Question from './components/question';
 import UserName from './components/UserName';
+import ScoreBoard from './components/ScoreBoard';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   //makes a call to backend
+  //needs to be wrapped in try/catch
   const callForQuizAPI = async () => {
     const response = await fetch('/myAPI/quizApi');
     const data = await response.json();
@@ -52,7 +54,7 @@ function App() {
       });
 
       if (response.ok) {
-        setSubmitStatus(`${reqBody.player_name}, your score has been submitted!`);
+        setSubmitStatus(`${reqBody.player_name}, your score has been RECORDED!`);
       } else {
        setSubmitStatus('Score not submitted :(');
       }
@@ -61,12 +63,16 @@ function App() {
     }
   };
 
-  /* will I need to put something here, so data/submitScore can come through*/
-  const renderMessage = (/* ?? */) => {
+  const renderMessage = () => {
     //message is true, when we answer the last question
     //when message is true, render <p>
     if (message) {
-      return <button onClick={() => submitScore()} className='buttons'>CLICK to save your score of {score} points</button>
+      return (
+        <>
+          <br />
+          <span>Your score is {score}</span>
+          <UserName submitScore={submitScore}/>
+        </> )
       //if message is false, render questions or empty string
     } else {
       //is questionArray populated?
@@ -88,16 +94,18 @@ function App() {
     callForQuizAPI();
   }, []);
 
+
   return (
     <>
 
+      <ScoreBoard />
       <h1 className='title'>Questions Game</h1>
-      
-      <UserName submitScore={submitScore}/>
       
       {submitStatus && <p>{submitStatus}</p>}
 
       {renderMessage()}
+
+      
 
     </>
   )
