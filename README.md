@@ -16,14 +16,13 @@ If you are interested in installing and running this project on your local compu
 
 * In the terminal, go to the server directory ***cd server*** and run the command ***npm run dev***. This will start the server in both your server directory and your client directory concurrently.
 
-* Please see the db.sql file, located in the db directory, for a list of SQL statements that you can run in your terminal to create a gamefebe database with one table "players" to get you started
+* Please see the db.sql file, located in the db directory, for a list of SQL statements that you can run in your terminal to create a 'gamefebe' database with one table "players" to get you started
 
 ### How to Use the Project
 
 The project will look like this on the client side:
 
-![Questions Game Preview](<Screenshot 2023-09-29 at 9.29.03 PM.png>)
-
+![Question Game Preview](<Screenshot 2023-09-29 at 9.29.03 PM.png>)
 
 ### Developer Contact
 
