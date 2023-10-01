@@ -4,6 +4,8 @@
 
 This Questions Game Application will display 5 questions to the user and keep track of the user's score during the game.  At the end of the game, the user score can be submitted to the database and saved.  There is also a button to display the top five players in descending order based on cumulative score.
 
+I am struggling to create tests beyond simplistic ones.  I will focus this week on adding multiple and more complex tests to the upcoming weeks project.
+
 ### Install Project 
 
 If you are interested in installing and running this project on your local computer, follow the steps below:
