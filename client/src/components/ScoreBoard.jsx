@@ -8,13 +8,13 @@ function ScoreBoard () {
     console.log(buttonClicked);
 
     //req to api in backend
-    const reqTopFive = async () => {
+    const reqTopTen = async () => {
         try {
         const response = await fetch('/myAPI/highScorePlayers');
         const data = await response.json();
         setTopFivePlayers(data);
         } catch(error) {
-            console.log('Error fetch top 5:', error)
+            console.log('Error fetch top 10:', error)
         }
         //set this to true, so scoreboard appears
         setButtonClicked(true);
@@ -28,11 +28,11 @@ function ScoreBoard () {
     return (
         <>
 
-        <button onClick={() => {reqTopFive()}}>ScoreBoard: Top Five!</button>
+        <button onClick={() => {reqTopTen()}}>ScoreBoard: Top Ten!</button>
         
         {buttonClicked && ( 
             <> 
-                <h2>Top 5 Players</h2>
+                <h2>Top 10 Players</h2>
                 <ul>
                     {topFivePlayers.map((player, index) => (
                         <li key={index}>
