@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import Question from './components/question';
+import UserName from './components/UserName';
+import ScoreBoard from './components/ScoreBoard';
 
 function App() {
 
@@ -9,32 +11,18 @@ function App() {
   const [questionArray, setQuestionArray] = useState([]);
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState(false);
-
-  //create some state to handle user's name??????
-  const [userName, setUserName] = useState("");
-  //form, what is your name?
-  //then message that says hello "user"
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   //makes a call to backend
+  //needs to be wrapped in try/catch
   const callForQuizAPI = async () => {
     const response = await fetch('/myAPI/quizApi');
     const data = await response.json();
-    // console.log('data fromAPI', data);
 
     setQuestionArray(data.results);
-
-    //we need to wait here to populate the states, react is too fast
-    //console.log('question array', questionArray);
-
-  }
-
-  //hook, what I want to happen when page renders
-  useEffect(() => {
-    callForQuizAPI();
-  }, []);
+  };
 
   const handleResult = (result) => {
-
     //if user selects correct answer, increment score by 1
     if (result === true) {
       setScore(score + 8);
@@ -47,22 +35,48 @@ function App() {
       //if index is not the last index, increment the index, show next question
       setIndex(index + 1);
     }
+  };
 
-  }
+  //put req to backend endpoint connected to db
+  const submitScore = async (username) => {
 
-  //????
-  // const submitScore = (username) => {
-      //const response = await fetch('/myAPI/quizApi:${username}');
+    //structure for req body
+    const reqBody = {
+      player_name: username,
+      currentscore: score, 
+    };
 
-  // }
+    //call or request to backend api
+    try {
+      const response = await fetch('/myAPI/editplayer_score', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+      });
 
-  /* will I need to put something here, so data/submitScore can come through*/
-  const renderMessage = (/* ?? */) => {
+      //set a message to update user on status of score being submitted
+      if (response.ok) {
+        setSubmitStatus(`${reqBody.player_name}, your score has been RECORDED!`);
+      } else {
+       setSubmitStatus('Score not submitted :(');
+      }
+    } catch (error) {
+      setSubmitStatus('Error with submit');
+    }
+  };
+
+  const renderMessage = () => {
     //message is true, when we answer the last question
     //when message is true, render <p>
     if (message) {
-      // <button onClick={() => submitScore()}> Submit {score} </button>  ???????
-      return <p>You have completed the game! & Your score is {score}</p>
+      return (
+        <>
+          <br />
+          <span>Your score is {score}</span>
+          <UserName submitScore={submitScore}/>
+        </> )
       //if message is false, render questions or empty string
     } else {
       //is questionArray populated?
@@ -77,27 +91,29 @@ function App() {
         return ` `
       }
     }
-  }
+  };
 
-  console.log('score', typeof {score})
+  //hook, what I want to happen when page renders, does the position matter?
+  useEffect(() => {
+    callForQuizAPI();
+  }, []);
+
 
   return (
     <>
+      {/* render scoreboard comp at end of game */}
+      {index == questionArray.length -1 && <ScoreBoard /> }
 
-      <div>
-        <h1 className='title'>Questions Game</h1>
-          <div>
-          {index == questionArray.length -1 ? null : <span className='points'>Each Question is worth 8 points</span>}
-          </div>
-      </div>
+      <h1 className='title'>Questions Game</h1>
+      
+      {/* message appear to confirm successful/unsuccessful req to backend api */}
+      {submitStatus && <p>{submitStatus}</p>}
 
+      {/* logic for displaying question, or ending score */}
       {renderMessage()}
 
-    
-      {/* {index == questionArray.length ? null : <p className='score'>{score}</p>} */}
+      
 
-
-    {/* button to show/display score board, onClick=make a call to endpoint, which will add score to current value of column, where username = "user'name" */}
     </>
   )
 }
